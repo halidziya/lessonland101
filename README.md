@@ -1,1 +1,3 @@
-# lessonland101
+# Lesson Land Programming Course Materials
+
+

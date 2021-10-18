@@ -12,5 +12,9 @@ class AbstractEmployee:
 class Employee(AbstractEmployee):
   def __init__(self, salary):
     self.salary = salary
+
   def get_salary(self):
     return self.salary
+
+  def raise_salary(self, percentage):
+    self.salary = int(self.salary * (100 + percentage)/100)
