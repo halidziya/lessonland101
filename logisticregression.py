@@ -50,6 +50,20 @@ lr = LogisticRegression()
 lr.fit(numeric_data, data['spam'])
 print(np.mean(lr.predict(x_test)==y_test))
 
+from sklearn.svm import SVC
+svm = SVC(probability=True)
+svm.fit(x_train, y_train)
+pred = svm.predict_proba(x_test)[:,1]
+
+x=[]
+y=[]
+for treshold in np.arange(0, 1, 0.01):
+    positives = (pred>treshold)
+    tpr = np.mean(np.sum((positives==True)&(y_test==1))/(np.sum(y_test==1)))
+    fpr = np.mean(np.sum((positives==True)&(y_test==0))/(np.sum(y_test==0)))
+    x.append(fpr)
+    y.append(tpr)
+plt.plot(x,y)
 
 #%% Word Level
 
@@ -67,5 +81,10 @@ print(model.evaluate(x_test, y_test))
 lr = LogisticRegression()
 lr.fit(numeric_data, data['spam'])
 print(np.mean(lr.predict(x_test)==y_test))
+
+pred = lr.predict(x_test)
+precison = np.sum((pred>0.5)&(y_test==1))/np.sum(pred==1)
+recall = np.sum((pred>0.5)&(y_test==1))/np.sum(y_test==1)
+f1 = 2*(precison*recall)/(precison+recall)
 
 
